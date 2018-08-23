@@ -1,2 +1,4 @@
 # buildML
-An easy and fast way to get started with different machine learning algorithms
+[NOTE]: The work on this repository is going on right now.
+
+An easy and fast machine learning framework to help you test multiple algorithms at the same time 
