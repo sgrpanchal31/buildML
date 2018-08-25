@@ -1,14 +1,49 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+class linearClassifier(object):
+    def __init__(self):
+        self.W = None
+    
+    def train(self, X, y, learning_rate=1e-3, reg=1e-5, num_iters=100,
+            batch_size=200, verbose=False):
+        
+        num_train, dim = X.shape
+        num_classes = 1 + np.max(y)
 
-def drawPlot(train_x, train_y, m, b):
-    plt.plot(train_x, train_y, 'ro')
-    plt.plot([0, 7000], [0 + b, 7000*m + b], color='b', linestyle='-', linewidth=2)
-    plt.xlabel('Size')
-    plt.ylabel('Price')
-    plt.tight_layout()
-    plt.show()
+        if self.W is None:
+            self.W = 0.001 * np.random.randn(dim, num_classes)
+        
+        loss_history = []
+
+        for it in range(num_iters):
+            X_batch = None
+            y_batch = None
+
+            batch_ind = np.random.choice(num_train, batch_size)
+            X_batch = X[batch_ind]
+            y_batch = y[batch_ind]
+
+            loss, grad = self.loss(X_batch, y_batch, reg)
+            loss_history.append(loss)
+
+            self.W += -learning_rate*grad
+
+            if verbose and it % 100 == 0:
+                print('iteration %d / %d: loss %f' % (it, num_iters, loss))
+        
+        return loss_history
+
+    def predict(self, X):
+        y_pred = np.zeros(X.shape[0])
+
+        y_pred = np.argmax(X.dot(self.W), axis=1)
+
+        return y_pred
+
+    def loss(self, X_batch, y_batch):
+        
+
 
 def step_gradient(b_current, k_current, train_x, train_y, learning_rate):
     b_grad = 0
@@ -23,17 +58,12 @@ def step_gradient(b_current, k_current, train_x, train_y, learning_rate):
     new_k = k_current - (learning_rate * k_grad)
     return [new_b, new_k]
 
-def run_descent(train_x, train_y, init_b, init_k, num_iters, learning_rate):
-    b = init_b
-    k = init_k
-    for i in range(num_iters):
-        b, k = step_gradient(b, k, train_x, train_y, learning_rate)
-    return [b, k]
+
 
 def run():
     file = 'data/houses.csv'
     points = np.array(np.genfromtxt(file, delimiter=',', skip_header=1))
-    learning_rate = 0.0000001
+    # learning_rate = 0.0000001
 
     train_x = points[:,0]  # 
     train_y = points[:,1]  # prices
