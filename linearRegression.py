@@ -24,7 +24,8 @@ class linearClassifier(object):
             X_batch = X[batch_ind]
             y_batch = y[batch_ind]
 
-            loss, grad = self.loss(X_batch, y_batch, reg)
+            # loss, grad = self.loss(X_batch, y_batch, reg)
+            loss, grad = self.loss(X_batch, y_batch)
             loss_history.append(loss)
 
             self.W += -learning_rate*grad
@@ -42,21 +43,21 @@ class linearClassifier(object):
         return y_pred
 
     def loss(self, X_batch, y_batch):
-        
 
 
-def step_gradient(b_current, k_current, train_x, train_y, learning_rate):
-    b_grad = 0
-    k_grad = 0
-    n = len(train_y)
-    for i in range(n):
-        x = train_x[i]
-        y = train_y[i]
-        b_grad += (1/n) * (((k_current * x) + b_current) - y)
-        k_grad += (1/n) * x * (((k_current * x) + b_current) - y)
-    new_b = b_current - (learning_rate * b_grad)
-    new_k = k_current - (learning_rate * k_grad)
-    return [new_b, new_k]
+
+# def step_gradient(b_current, k_current, train_x, train_y, learning_rate):
+#     b_grad = 0
+#     k_grad = 0
+#     n = len(train_y)
+#     for i in range(n):
+#         x = train_x[i]
+#         y = train_y[i]
+#         b_grad += (1/n) * (((k_current * x) + b_current) - y)
+#         k_grad += (1/n) * x * (((k_current * x) + b_current) - y)
+#     new_b = b_current - (learning_rate * b_grad)
+#     new_k = k_current - (learning_rate * k_grad)
+#     return [new_b, new_k]
 
 
 
