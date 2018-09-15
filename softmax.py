@@ -7,6 +7,8 @@ def softmax_loss_naive(W, X, y, reg):
     num_train = X.shape[0]
     num_classes = W.shape[1]
 
-    socres = np.dot(X, W)
+    scores = np.dot(X, W)
+
+    
 
     

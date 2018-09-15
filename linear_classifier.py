@@ -43,7 +43,8 @@ class linearClassifier(object):
         return y_pred
 
     def loss(self, X_batch, y_batch):
-
+        # knkj
+        pass
 
 
 # def step_gradient(b_current, k_current, train_x, train_y, learning_rate):
